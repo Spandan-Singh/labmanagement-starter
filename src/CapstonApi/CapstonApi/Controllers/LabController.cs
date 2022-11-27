@@ -34,14 +34,14 @@ namespace CapstoneApi.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public Lab UpdateAutherById([FromRoute] int id, [FromBody] Lab lab)
+        public Lab UpdateAutherById([FromRoute] int id, [FromBody] LabDbo lab)
         {
             return _labProvider.UpdateLabById(id, lab);
         }
 
 
         [HttpPost]
-        public Lab CreateAuther([FromBody] Lab lab)
+        public Lab CreateAuther([FromBody] LabDbo lab)
         {
             return _labProvider.CreateLab(lab);
         }

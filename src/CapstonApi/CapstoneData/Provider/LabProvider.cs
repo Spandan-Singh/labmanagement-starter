@@ -10,19 +10,19 @@ namespace CapstoneData.Provider
         {
             _context = context;
         }
-        public Lab CreateLab(Lab lab)
+        public Lab CreateLab(LabDbo lab)
         {
-            LabDbo labDboToCreate = new LabDbo
+            Lab labDboToCreate = new Lab
             {
                 Name = lab.Name,
                 Description = lab.Description,
-                AutherId = lab.Auther.Id,
-                CategoryId = lab.Category.Id,
+                Auther = _context.Authers.FirstOrDefault(auth => auth.Id == lab.AutherId),
+                Category = _context.Categories.FirstOrDefault(cat => cat.Id == lab.CategoryId),
                 Id = lab.Id
             };
-            _context.Labs.Add(labDboToCreate);
+            _context.Labs.Add(lab);
             _context.SaveChanges();
-            return lab;
+            return labDboToCreate;
         }
 
         public bool DeleteLabById(int id)
@@ -67,19 +67,27 @@ namespace CapstoneData.Provider
 
         }
 
-        public Lab UpdateLabById(int id, Lab lab)
+        public Lab UpdateLabById(int id, LabDbo lab)
         {
             LabDbo? labToModify = _context.Labs.FirstOrDefault(lab => lab.Id == id);
             if (labToModify is not null)
             {
                 labToModify.Name = lab.Name;
                 labToModify.Description = lab.Description;
-                labToModify.AutherId = lab.Auther.Id;
-                labToModify.CategoryId = lab.Category.Id;
+                labToModify.AutherId = lab.AutherId;
+                labToModify.CategoryId = lab.CategoryId;
                 labToModify.Id = lab.Id;
                 _context.SaveChanges();
             }
-            return lab;
+            return new Lab
+            {
+
+                Name = lab.Name,
+                Description = lab.Description,
+                Auther = _context.Authers.FirstOrDefault(auth => auth.Id == labToModify.AutherId),
+                Category = _context.Categories.FirstOrDefault(cat => cat.Id == labToModify.CategoryId),
+                Id = lab.Id
+            };
         }
     }
 }

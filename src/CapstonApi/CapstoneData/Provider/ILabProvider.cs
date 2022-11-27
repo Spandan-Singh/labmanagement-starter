@@ -6,8 +6,8 @@ namespace CapstoneData.Provider
     {
         IEnumerable<Lab> GetLabs();
         Lab? GetLabById(int id);
-        Lab CreateLab(Lab lab);
-        Lab UpdateLabById(int id, Lab lab);
+        Lab CreateLab(LabDbo lab);
+        Lab UpdateLabById(int id, LabDbo lab);
         bool DeleteLabById(int id);
     }
 }
