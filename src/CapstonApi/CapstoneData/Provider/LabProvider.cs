@@ -53,15 +53,18 @@ namespace CapstoneData.Provider
 
         public IEnumerable<Lab> GetLabs()
         {
-            foreach(LabDbo lab in _context.Labs)
+            IList<AutherDbo> authers = _context.Authers.ToList();
+            IList<CategoryDbo> categories = _context.Categories.ToList();
+
+            foreach (LabDbo lab in _context.Labs)
             {
                 yield return new Lab
                 {
                     Id = lab.Id,
                     Name = lab.Name,
                     Description= lab.Description,  
-                    Auther= _context.Authers.FirstOrDefault(auth => auth.Id == lab.AutherId),
-                    Category = _context.Categories.FirstOrDefault(cat => cat.Id == lab.CategoryId)
+                    Auther= authers.FirstOrDefault(auth => auth.Id == lab.AutherId),
+                    Category = categories.FirstOrDefault(cat => cat.Id == lab.CategoryId)
                 };
             }
 
@@ -76,7 +79,6 @@ namespace CapstoneData.Provider
                 labToModify.Description = lab.Description;
                 labToModify.AutherId = lab.AutherId;
                 labToModify.CategoryId = lab.CategoryId;
-                labToModify.Id = lab.Id;
                 _context.SaveChanges();
             }
             return new Lab
