@@ -9,41 +9,41 @@ namespace CapstoneApi.Controllers
     public class LabController : Controller
     {
         private readonly ILogger<LabController> _logger;
-        private readonly IAutherProvider _autherProvider;
+        private readonly ILabProvider _labProvider;
 
-        public LabController(ILogger<LabController> logger, IAutherProvider autherProvider)
+        public LabController(ILogger<LabController> logger, ILabProvider labProvider)
         {
             _logger = logger;
-            _autherProvider = autherProvider;
+            _labProvider = labProvider;
         }
 
         [HttpGet]
-        public IEnumerable<AutherDbo> GetAuthers()
+        public IEnumerable<Lab> GetAuthers()
         {
-            return _autherProvider.GetAuthers();
+            return _labProvider.GetLabs();
         }
 
 
         [HttpGet]
         [Route("{id}")]
-        public AutherDbo? RetriveAutherById(int id)
+        public Lab? RetriveAutherById(int id)
         {
-            return _autherProvider.GetAutherById(id);
+            return _labProvider.GetLabById(id);
         }
 
 
         [HttpPut]
         [Route("{id}")]
-        public AutherDbo UpdateAutherById([FromRoute] int id, [FromBody] AutherDbo auther)
+        public Lab UpdateAutherById([FromRoute] int id, [FromBody] Lab lab)
         {
-            return _autherProvider.UpdateAutherById(id, auther);
+            return _labProvider.UpdateLabById(id, lab);
         }
 
 
         [HttpPost]
-        public AutherDbo CreateAuther([FromBody] AutherDbo auther)
+        public Lab CreateAuther([FromBody] Lab lab)
         {
-            return _autherProvider.CreateAuther(auther);
+            return _labProvider.CreateLab(lab);
         }
 
 
@@ -51,7 +51,7 @@ namespace CapstoneApi.Controllers
         [Route("{id}")]
         public IActionResult DeleteAutherById(int id)
         {
-            return Ok(_autherProvider.DeleteAutherById(id));
+            return Ok(_labProvider.DeleteLabById(id));
         }
     }
 }
